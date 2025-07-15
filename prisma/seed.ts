@@ -6,16 +6,16 @@ const prisma = new PrismaClient()
 async function main() {
   console.log('🌱 Seeding database...')
 
-  // Create admin user
-  const hashedPassword = await bcrypt.hash('admin123', 12)
+  // Create admin user with secure credentials
+  const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD || 'defaultpass', 12)
   
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@example.com' },
+    where: { email: 'gaganrai907@gmail.com' },
     update: {},
     create: {
-      email: 'admin@example.com',
+      email: 'gaganrai907@gmail.com',
       password: hashedPassword,
-      name: 'Admin User',
+      name: 'Gagan Kumar',
       role: 'admin',
     },
   })
@@ -26,16 +26,16 @@ async function main() {
   
   const profile = existingProfile || await prisma.profile.create({
     data: {
-      name: 'John Doe',
+      name: 'Gagan Kumar',
       title: 'Full Stack Developer',
       bio: 'Passionate full-stack developer with 3+ years of experience building modern web applications. I love creating intuitive user interfaces and robust backend systems.',
-      email: 'admin@example.com',
-      phone: '+1 (555) 123-4567',
-      location: 'San Francisco, CA',
-      website: 'https://johndoe.dev',
-      github: 'https://github.com/johndoe',
-      linkedin: 'https://linkedin.com/in/johndoe',
-      twitter: 'https://twitter.com/johndoe',
+      email: 'gaganrai907@gmail.com',
+      phone: '+91 9876543210',
+      location: 'India',
+      website: 'https://gaganportfolio.dev',
+      github: 'https://github.com/gagankumar907',
+      linkedin: 'https://linkedin.com/in/gagankumar907',
+      twitter: 'https://twitter.com/gagankumar907',
     },
   })
   console.log('✅ Created profile for:', profile.name)
