@@ -45,7 +45,7 @@ export function HeroSection() {
               <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
                 Hi, I&apos;m{' '}
                 <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-                  {profile?.name || 'Your Name'}
+                  {profile?.name || 'Gagan Rai'}
                 </span>
               </h1>
               <h2 className="text-xl md:text-2xl text-gray-300 font-medium">
