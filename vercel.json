@@ -8,10 +8,5 @@
       "maxDuration": 30
     }
   },
-  "regions": ["bom1"],
-  "env": {
-    "NEXTAUTH_SECRET": "@nextauth_secret",
-    "ADMIN_PASSWORD": "@admin_password",
-    "DATABASE_URL": "@database_url"
-  }
+  "regions": ["bom1"]
 }
