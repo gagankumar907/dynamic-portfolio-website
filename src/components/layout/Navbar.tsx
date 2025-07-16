@@ -1,11 +1,28 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Settings } from 'lucide-react'
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Keyboard shortcut for admin (Ctrl + Shift + A)
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.shiftKey && event.key === 'A') {
+        event.preventDefault()
+        window.open('/admin/login', '_blank')
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  const openAdminPanel = () => {
+    window.open('/admin/login', '_blank')
+  }
 
   const navItems = [
     { name: 'Home', href: '#home' },
@@ -51,12 +68,15 @@ export function Navbar() {
 
           {/* Admin Link */}
           <div className="hidden md:block">
-            <Link
-              href="/admin"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+            <button
+              onClick={openAdminPanel}
+              className="group relative inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 transform hover:scale-105"
+              title="Admin Panel (Ctrl+Shift+A)"
             >
+              <Settings className="w-4 h-4 mr-1.5" />
               Admin
-            </Link>
+              <span className="absolute inset-0 border border-blue-400 rounded-md opacity-0 group-hover:opacity-50 transition-opacity duration-200"></span>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -89,12 +109,17 @@ export function Navbar() {
                 {item.name}
               </a>
             ))}
-            <Link
-              href="/admin"
-              className="bg-blue-600 hover:bg-blue-700 text-white block px-3 py-2 rounded-md text-base font-medium"
+            <button
+              onClick={() => {
+                setIsMenuOpen(false)
+                openAdminPanel()
+              }}
+              className="group flex items-center bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-base font-medium w-full transition-all duration-200"
+              title="Admin Panel (Ctrl+Shift+A)"
             >
-              Admin
-            </Link>
+              <Settings className="w-4 h-4 mr-2" />
+              Admin Panel
+            </button>
           </div>
         </div>
       )}

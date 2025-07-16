@@ -8,7 +8,6 @@ import {
   Briefcase, 
   Mail, 
   User,
-  TrendingUp,
   Eye,
   MessageSquare,
   GraduationCap
@@ -63,7 +62,7 @@ export default function AdminDashboard() {
       const educationArray = Array.isArray(education) ? education : []
       const messagesArray = Array.isArray(messages) ? messages : []
 
-      const unreadMessages = messagesArray.filter((msg: any) => !msg.read).length
+      const unreadMessages = messagesArray.filter((msg: { read?: boolean }) => !msg.read).length
 
       setStats({
         projects: projectsArray.length || 0,

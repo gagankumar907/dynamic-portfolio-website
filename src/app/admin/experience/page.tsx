@@ -103,7 +103,7 @@ export default function AdminExperience() {
         description: experience.description || '',
         location: experience.location || '',
         website: experience.website || '',
-        technologies: parseJSON(experience.technologies as any, []),
+        technologies: typeof experience.technologies === 'string' ? parseJSON(experience.technologies, []) : experience.technologies || [],
         startDate: experience.startDate ? new Date(experience.startDate).toISOString().split('T')[0] : '',
         endDate: experience.endDate ? new Date(experience.endDate).toISOString().split('T')[0] : '',
         current: experience.current || false,
@@ -213,7 +213,7 @@ export default function AdminExperience() {
             
             <div className="space-y-8">
               {experiences.map((experience) => {
-                const technologies = parseJSON<string[]>(experience.technologies as any, [])
+                const technologies = typeof experience.technologies === 'string' ? parseJSON<string[]>(experience.technologies, []) : experience.technologies || []
                 
                 return (
                   <div key={experience.id} className="relative flex items-start">

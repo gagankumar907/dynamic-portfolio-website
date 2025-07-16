@@ -40,7 +40,9 @@ export default function AdminLogin() {
       } else {
         const session = await getSession()
         if (session) {
-          router.push('/admin')
+          // Success message और redirect
+          setError('')
+          router.push('/admin/profile') // Direct admin panel में भेजें
         }
       }
     } catch (error) {

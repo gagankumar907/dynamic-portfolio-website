@@ -39,7 +39,7 @@ export function AboutSection() {
             About Me
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Get to know more about who I am, what I do, and what I'm passionate about.
+            Get to know more about who I am, what I do, and what I&apos;m passionate about.
           </p>
         </div>
 
@@ -48,17 +48,17 @@ export function AboutSection() {
           <div className="space-y-6">
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-white mb-4">
-                Hello! I'm {profile?.name || 'a Developer'}
+                Hello! I&apos;m {profile?.name || 'a Developer'}
               </h3>
               <div className="text-gray-300 space-y-4 leading-relaxed">
                 <p>
-                  {profile?.bio || "I'm a passionate full-stack developer with a love for creating innovative digital solutions. My journey in web development started several years ago, and I've been constantly learning and evolving ever since."}
+                  {profile?.bio || "I&apos;m a passionate full-stack developer with a love for creating innovative digital solutions. My journey in web development started several years ago, and I&apos;ve been constantly learning and evolving ever since."}
                 </p>
                 <p>
-                  I enjoy working on challenging projects that push the boundaries of what's possible on the web. When I'm not coding, you can find me exploring new technologies, contributing to open source projects, or sharing knowledge with the developer community.
+                  I enjoy working on challenging projects that push the boundaries of what&apos;s possible on the web. When I&apos;m not coding, you can find me exploring new technologies, contributing to open source projects, or sharing knowledge with the developer community.
                 </p>
                 <p>
-                  I believe in writing clean, maintainable code and creating user experiences that are both beautiful and functional. Let's build something amazing together!
+                  I believe in writing clean, maintainable code and creating user experiences that are both beautiful and functional. Let&apos;s build something amazing together!
                 </p>
               </div>
             </div>

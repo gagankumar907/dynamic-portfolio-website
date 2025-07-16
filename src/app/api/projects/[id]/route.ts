@@ -5,11 +5,12 @@ import { authOptions } from '@/lib/auth'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params
     const project = await prisma.project.findUnique({
-      where: { id: params.id }
+      where: { id: id }
     })
 
     if (!project) {
@@ -25,9 +26,10 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params
     const session = await getServerSession(authOptions)
     
     if (!session || session.user.role !== 'admin') {
@@ -36,7 +38,7 @@ export async function PUT(
 
     const data = await request.json()
     const project = await prisma.project.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         title: data.title,
         description: data.description,
@@ -63,9 +65,10 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params
     const session = await getServerSession(authOptions)
     
     if (!session || session.user.role !== 'admin') {
@@ -73,7 +76,7 @@ export async function DELETE(
     }
 
     await prisma.project.delete({
-      where: { id: params.id }
+      where: { id: id }
     })
 
     return NextResponse.json({ message: 'Project deleted successfully' })

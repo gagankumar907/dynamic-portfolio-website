@@ -73,11 +73,10 @@ export function ExperienceSection() {
               <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-700"></div>
               
               <div className="space-y-8">
-                {experiences.map((experience, index) => (
+                {experiences.map((experience) => (
                   <ExperienceCard 
                     key={experience.id} 
                     experience={experience} 
-                    isLast={index === experiences.length - 1}
                   />
                 ))}
               </div>
@@ -95,7 +94,7 @@ export function ExperienceSection() {
   )
 }
 
-function ExperienceCard({ experience, isLast }: { experience: Experience; isLast: boolean }) {
+function ExperienceCard({ experience }: { experience: Experience }) {
   const technologies = parseJSON<string[]>(experience.technologies || '', [])
   
   return (

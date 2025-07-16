@@ -126,17 +126,3 @@ function SkillCard({ skill }: { skill: Skill }) {
     </div>
   )
 }
-
-// Default skills if none exist
-const defaultSkills = [
-  { category: 'Frontend', name: 'React', level: 5, icon: '⚛️', color: '#61DAFB' },
-  { category: 'Frontend', name: 'Next.js', level: 5, icon: '▲', color: '#000000' },
-  { category: 'Frontend', name: 'TypeScript', level: 4, icon: '📘', color: '#3178C6' },
-  { category: 'Frontend', name: 'Tailwind CSS', level: 5, icon: '🎨', color: '#38B2AC' },
-  { category: 'Backend', name: 'Node.js', level: 4, icon: '🟢', color: '#339933' },
-  { category: 'Backend', name: 'Python', level: 4, icon: '🐍', color: '#3776AB' },
-  { category: 'Database', name: 'PostgreSQL', level: 4, icon: '🐘', color: '#336791' },
-  { category: 'Database', name: 'MongoDB', level: 3, icon: '🍃', color: '#47A248' },
-  { category: 'Tools', name: 'Git', level: 4, icon: '🌿', color: '#F05032' },
-  { category: 'Tools', name: 'Docker', level: 3, icon: '🐳', color: '#2496ED' },
-]

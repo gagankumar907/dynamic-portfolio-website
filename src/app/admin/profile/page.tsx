@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { AdminLayout } from '@/components/admin/AdminLayout'
-import { Save, Upload, User, Mail, Phone, MapPin, Globe, Github, Linkedin, Twitter, Instagram } from 'lucide-react'
+import { Save, Upload, User, Mail } from 'lucide-react'
 
 interface Profile {
   id?: string
@@ -43,6 +43,48 @@ export default function AdminProfile() {
 
   useEffect(() => {
     fetchProfile()
+    
+    // Add test function to window for debugging
+    if (typeof window !== 'undefined') {
+      (window as { testDirectAPI?: () => Promise<void> }).testDirectAPI = async () => {
+        try {
+          console.log('🧪 Testing direct API call...')
+          const testData = {
+            name: 'Direct API Test ' + new Date().getTime(),
+            title: 'Test Title',
+            bio: 'Test Bio',
+            email: 'test@example.com',
+            phone: '+91 1234567890',
+            location: 'Test Location',
+            website: 'https://test.com',
+            avatar: '',
+            resume: '',
+            github: 'https://github.com/test',
+            linkedin: 'https://linkedin.com/in/test',
+            twitter: 'https://twitter.com/test',
+            instagram: ''
+          }
+          
+          const response = await fetch('/api/profile', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(testData)
+          })
+          
+          console.log('Response status:', response.status)
+          console.log('Response headers:', [...response.headers.entries()])
+          
+          const result = await response.json()
+          console.log('Response data:', result)
+          
+        } catch (error) {
+          console.error('Direct API test failed:', error)
+        }
+      }
+      console.log('🔧 Debug function added. Run testDirectAPI() in console to test API directly.')
+    }
   }, [])
 
   const fetchProfile = async () => {
@@ -91,6 +133,7 @@ export default function AdminProfile() {
     setMessage('')
 
     try {
+      console.log('Submitting profile data:', profile)
       const response = await fetch('/api/profile', {
         method: 'POST',
         headers: {
@@ -99,11 +142,17 @@ export default function AdminProfile() {
         body: JSON.stringify(profile)
       })
 
+      console.log('Response status:', response.status)
+      const responseData = await response.json()
+      console.log('Response data:', responseData)
+
       if (response.ok) {
         setMessage('Profile updated successfully!')
         setTimeout(() => setMessage(''), 3000)
+        // Refresh the profile data
+        await fetchProfile()
       } else {
-        setMessage('Error updating profile. Please try again.')
+        setMessage(`Error updating profile: ${responseData.error || 'Please try again.'}`)
       }
     } catch (error) {
       console.error('Error saving profile:', error)

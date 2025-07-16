@@ -330,9 +330,9 @@ export default function AdminEducation() {
                     >
                       <option value="">Select Degree</option>
                       <option value="High School Diploma">High School Diploma</option>
-                      <option value="Associate's Degree">Associate's Degree</option>
-                      <option value="Bachelor's Degree">Bachelor's Degree</option>
-                      <option value="Master's Degree">Master's Degree</option>
+                      <option value="Associate's Degree">Associate&apos;s Degree</option>
+                      <option value="Bachelor's Degree">Bachelor&apos;s Degree</option>
+                      <option value="Master's Degree">Master&apos;s Degree</option>
                       <option value="MBA">MBA</option>
                       <option value="PhD">PhD</option>
                       <option value="Doctorate">Doctorate</option>

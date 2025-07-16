@@ -5,11 +5,12 @@ import { authOptions } from '@/lib/auth'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params
     const skill = await prisma.skill.findUnique({
-      where: { id: params.id }
+      where: { id: id }
     })
 
     if (!skill) {
@@ -25,9 +26,10 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params
     const session = await getServerSession(authOptions)
     
     if (!session || session.user.role !== 'admin') {
@@ -36,7 +38,7 @@ export async function PUT(
 
     const data = await request.json()
     const skill = await prisma.skill.update({
-      where: { id: params.id },
+      where: { id: id },
       data: {
         name: data.name,
         category: data.category,
@@ -56,9 +58,10 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await context.params
     const session = await getServerSession(authOptions)
     
     if (!session || session.user.role !== 'admin') {
@@ -66,7 +69,7 @@ export async function DELETE(
     }
 
     await prisma.skill.delete({
-      where: { id: params.id }
+      where: { id: id }
     })
 
     return NextResponse.json({ message: 'Skill deleted successfully' })

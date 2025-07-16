@@ -8,7 +8,6 @@ import {
   Calendar, 
   MessageSquare, 
   Phone,
-  ExternalLink,
   Eye,
   Trash2,
   X,

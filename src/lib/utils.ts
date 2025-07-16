@@ -30,7 +30,7 @@ export function parseJSON<T>(json: string | null, fallback: T): T {
 }
 
 // Utility function to safely handle form data from API responses
-export function safeFormData<T extends Record<string, any>>(data: T): T {
+export function safeFormData<T extends Record<string, unknown>>(data: T): T {
   const safeData = {} as T
   
   for (const key in data) {
@@ -38,7 +38,7 @@ export function safeFormData<T extends Record<string, any>>(data: T): T {
       const value = data[key]
       // Convert null to empty string for string fields, keep other types as is
       if (value === null && typeof value !== 'boolean' && typeof value !== 'number') {
-        (safeData as any)[key] = ''
+        (safeData as Record<string, unknown>)[key] = ''
       } else {
         safeData[key] = value
       }

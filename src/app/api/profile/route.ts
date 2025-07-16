@@ -15,16 +15,21 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('POST /api/profile called')
     const session = await getServerSession(authOptions)
+    console.log('Session:', session)
     
     if (!session || session.user.role !== 'admin') {
+      console.log('Unauthorized access attempt')
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const data = await request.json()
+    console.log('Received data:', data)
     
     // Check if profile already exists
     const existingProfile = await prisma.profile.findFirst()
+    console.log('Existing profile:', existingProfile)
     
     let profile
     if (existingProfile) {
@@ -47,6 +52,7 @@ export async function POST(request: NextRequest) {
           instagram: data.instagram,
         }
       })
+      console.log('Updated profile:', profile)
     } else {
       // Create new profile
       profile = await prisma.profile.create({
