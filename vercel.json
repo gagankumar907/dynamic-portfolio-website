@@ -1,0 +1,17 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run vercel-build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "functions": {
+    "src/app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  },
+  "regions": ["bom1"],
+  "env": {
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "ADMIN_PASSWORD": "@admin_password",
+    "DATABASE_URL": "@database_url"
+  }
+}
