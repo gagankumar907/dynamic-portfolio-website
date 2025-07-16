@@ -13,13 +13,13 @@ async function main() {
     where: { email: 'gaganrai907@gmail.com' },
     update: {
       password: hashedPassword,
-      name: 'Gagan Kumar',
+      name: 'Gagan Rai',
       role: 'admin',
     },
     create: {
       email: 'gaganrai907@gmail.com',
       password: hashedPassword,
-      name: 'Gagan Kumar',
+      name: 'Gagan Rai',
       role: 'admin',
     },
   })
@@ -36,7 +36,7 @@ async function main() {
     // Create new profile only if none exists
     profile = await prisma.profile.create({
       data: {
-        name: 'Gagan Kumar',
+        name: 'Gagan Rai',
         title: 'Full Stack Developer',
         bio: 'Passionate full-stack developer with 3+ years of experience building modern web applications. I love creating intuitive user interfaces and robust backend systems.',
         email: 'gaganrai907@gmail.com',
