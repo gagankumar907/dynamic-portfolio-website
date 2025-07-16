@@ -9,6 +9,7 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL") // Required for migrations in some environments
+  directUrl = env("DIRECT_URL") // Optional: for connection pooling
 }
 
 model User {
