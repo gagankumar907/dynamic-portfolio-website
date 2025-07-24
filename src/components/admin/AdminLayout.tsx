@@ -15,7 +15,8 @@ import {
   LogOut,
   Menu,
   X,
-  GraduationCap
+  GraduationCap,
+  Home
 } from 'lucide-react'
 
 interface AdminLayoutProps {
@@ -49,6 +50,7 @@ export function AdminLayout({ children, title }: AdminLayoutProps) {
 
   const navigation = [
     { name: 'Dashboard', href: '/admin', icon: Settings },
+    { name: 'Home Settings', href: '/admin/home-settings', icon: Home },
     { name: 'Profile', href: '/admin/profile', icon: User },
     { name: 'Projects', href: '/admin/projects', icon: FolderOpen },
     { name: 'Skills', href: '/admin/skills', icon: Award },

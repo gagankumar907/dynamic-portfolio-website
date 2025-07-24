@@ -16,8 +16,17 @@ interface Profile {
   linkedin?: string
 }
 
+interface HomeStats {
+  yearsExperience: string
+  projectsDone: string
+  clientSatisfaction: string
+  heroTitle: string
+  heroBio: string
+}
+
 export function HeroSection() {
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [homeStats, setHomeStats] = useState<HomeStats | null>(null)
   const [currentWord, setCurrentWord] = useState(0)
   const [mounted, setMounted] = useState(false)
   
@@ -50,6 +59,7 @@ export function HeroSection() {
   useEffect(() => {
     setMounted(true)
     fetchProfile()
+    fetchHomeStats()
     
     // Animated title words
     const interval = setInterval(() => {
@@ -68,6 +78,18 @@ export function HeroSection() {
       }
     } catch (error) {
       console.error('Error fetching profile:', error)
+    }
+  }
+
+  const fetchHomeStats = async () => {
+    try {
+      const response = await fetch('/api/home-stats')
+      if (response.ok) {
+        const data = await response.json()
+        setHomeStats(data)
+      }
+    } catch (error) {
+      console.error('Error fetching home stats:', error)
     }
   }
 
@@ -144,7 +166,7 @@ export function HeroSection() {
 
               <div className="flex items-center gap-4 text-3xl md:text-4xl bg-gradient-to-r from-slate-800/50 to-slate-700/30 backdrop-blur-xl border border-blue-500/20 px-8 py-4 rounded-2xl shadow-2xl shadow-blue-500/10">
                 <Code className="w-10 h-10 text-blue-400 animate-pulse" />
-                <span className="text-gray-200 font-bold">Full Stack</span>
+                <span className="text-gray-200 font-bold">{homeStats?.heroTitle || 'Full Stack'}</span>
                 <span 
                   key={currentWord}
                   className="bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent font-black animate-slideInUp drop-shadow-lg"
@@ -154,16 +176,16 @@ export function HeroSection() {
               </div>
 
               <p className="text-gray-300 text-xl md:text-2xl leading-relaxed max-w-3xl bg-gradient-to-r from-slate-800/40 to-slate-700/20 backdrop-blur-xl border border-slate-600/30 p-8 rounded-3xl shadow-2xl shadow-slate-900/50">
-                {profile?.bio || 'I create beautiful, functional, and user-friendly websites and applications with cutting-edge technologies. Welcome to my digital portfolio where innovation meets creativity.'}
+                {homeStats?.heroBio || profile?.bio || 'I create beautiful, functional, and user-friendly websites and applications with cutting-edge technologies. Welcome to my digital portfolio where innovation meets creativity.'}
               </p>
             </div>
 
             {/* Enhanced Stats */}
             <div className="grid grid-cols-3 gap-8 py-8">
               {[
-                { number: '3+', label: 'Years Experience', color: 'from-blue-400 to-cyan-400' },
-                { number: '50+', label: 'Projects Done', color: 'from-purple-400 to-pink-400' },
-                { number: '100%', label: 'Client Satisfaction', color: 'from-emerald-400 to-green-400' }
+                { number: homeStats?.yearsExperience || '3+', label: 'Years Experience', color: 'from-blue-400 to-cyan-400' },
+                { number: homeStats?.projectsDone || '50+', label: 'Projects Done', color: 'from-purple-400 to-pink-400' },
+                { number: homeStats?.clientSatisfaction || '100%', label: 'Client Satisfaction', color: 'from-emerald-400 to-green-400' }
               ].map((stat, index) => (
                 <div key={index} className="text-center group bg-gradient-to-br from-slate-800/60 to-slate-700/40 backdrop-blur-xl border border-slate-600/30 p-6 rounded-2xl hover:scale-110 transition-all duration-500 shadow-xl hover:shadow-2xl">
                   <div className={`text-3xl md:text-4xl font-black bg-gradient-to-r ${stat.color} bg-clip-text text-transparent group-hover:scale-125 transition-transform duration-300 drop-shadow-lg`}>

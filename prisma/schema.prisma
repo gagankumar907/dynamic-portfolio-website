@@ -133,3 +133,14 @@ model BlogPost {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model HomeStats {
+  id                String   @id @default(cuid())
+  yearsExperience   String   @default("3+")
+  projectsDone      String   @default("50+")
+  clientSatisfaction String  @default("100%")
+  heroTitle         String   @default("Full Stack Developer")
+  heroBio           String   @default("I create beautiful, functional, and user-friendly websites and applications with cutting-edge technologies. Welcome to my digital portfolio where innovation meets creativity.")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}

@@ -48,7 +48,32 @@ async function main() {
         twitter: 'https://twitter.com/gagankumar907',
       },
     })
-    console.log('✅ Created new profile for:', profile.name)
+        console.log('✅ Created profile:', profile.name)
+  }
+
+  // Create home stats only if they don't exist
+  const existingHomeStats = await prisma.homeStats.findFirst()
+  
+  let homeStats
+  if (existingHomeStats) {
+    console.log('✅ Home stats already exist, keeping existing data')
+    homeStats = existingHomeStats
+  } else {
+    // Create new home stats only if none exist
+    homeStats = await prisma.homeStats.create({
+      data: {
+        yearsExperience: '3+',
+        projectsDone: '50+',
+        clientSatisfaction: '100%',
+        heroTitle: 'Full Stack Developer',
+        heroBio: `Passionate full-stack developer with 3+ years of experience building modern web applications. I love creating intuitive user interfaces and robust backend systems.
+
+I enjoy working on challenging projects that push the boundaries of what's possible on the web. When I'm not coding, you can find me exploring new technologies, contributing to open source projects, or sharing knowledge with the developer community.
+
+I believe in writing clean, maintainable code and creating user experiences that are both beautiful and functional. Let's build something amazing together! ✨`,
+      },
+    })
+    console.log('✅ Created home stats')
   }
 
   // Create sample projects (only if they don't exist)
