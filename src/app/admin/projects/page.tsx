@@ -172,26 +172,38 @@ export default function AdminProjects() {
       const url = editingProject ? `/api/projects/${editingProject.id}` : '/api/projects'
       const method = editingProject ? 'PUT' : 'POST'
 
+      // Prepare data with proper null handling
+      const submitData = {
+        ...formData,
+        technologies: formData.technologies,
+        images: formData.images,
+        startDate: formData.startDate ? formData.startDate : null,
+        endDate: formData.endDate ? formData.endDate : null,
+        // Ensure boolean values are properly handled
+        featured: Boolean(formData.featured),
+        // Ensure numeric values are properly handled
+        order: Number(formData.order) || 0
+      }
+
       const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...formData,
-          technologies: formData.technologies,
-          images: formData.images,
-          startDate: formData.startDate ? new Date(formData.startDate) : null,
-          endDate: formData.endDate ? new Date(formData.endDate) : null
-        })
+        body: JSON.stringify(submitData)
       })
 
       if (response.ok) {
         await fetchProjects()
         closeForm()
+      } else {
+        const errorData = await response.json()
+        console.error('Error response:', errorData)
+        alert(`Error: ${errorData.error || 'Failed to save project'}`)
       }
     } catch (error) {
       console.error('Error saving project:', error)
+      alert('Error saving project. Please try again.')
     } finally {
       setSaving(false)
     }
