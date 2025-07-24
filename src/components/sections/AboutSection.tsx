@@ -13,12 +13,22 @@ interface Profile {
   website?: string
 }
 
+interface HomeStats {
+  yearsExperience: string
+  projectsDone: string
+  clientSatisfaction: string
+  heroTitle: string
+  heroBio: string
+}
+
 export function AboutSection() {
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [homeStats, setHomeStats] = useState<HomeStats | null>(null)
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
     fetchProfile()
+    fetchHomeStats()
     
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -44,6 +54,18 @@ export function AboutSection() {
       }
     } catch (error) {
       console.error('Error fetching profile:', error)
+    }
+  }
+
+  const fetchHomeStats = async () => {
+    try {
+      const response = await fetch('/api/home-stats')
+      if (response.ok) {
+        const data = await response.json()
+        setHomeStats(data)
+      }
+    } catch (error) {
+      console.error('Error fetching home stats:', error)
     }
   }
 
@@ -112,7 +134,7 @@ export function AboutSection() {
               <div className="text-gray-300 space-y-6 text-lg leading-relaxed">
                 <p className="relative">
                   <span className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-blue-400 to-purple-500 rounded-full"></span>
-                  {profile?.bio || "I'm a passionate full-stack developer with a love for creating innovative digital solutions. My journey in web development started several years ago, and I've been constantly learning and evolving ever since."}
+                  {homeStats?.heroBio || profile?.bio || "I'm a passionate full-stack developer with a love for creating innovative digital solutions. My journey in web development started several years ago, and I've been constantly learning and evolving ever since."}
                 </p>
                 
                 <p>
@@ -219,10 +241,10 @@ export function AboutSection() {
         {/* Enhanced Stats */}
         <div className={`grid grid-cols-2 md:grid-cols-4 gap-6 ${isVisible ? 'animate-fadeInUp' : 'opacity-0'}`} style={{ animationDelay: '0.6s' }}>
           {[
-            { number: '3+', label: 'Years Experience', icon: Award, color: 'blue' },
-            { number: '50+', label: 'Projects Completed', icon: Target, color: 'purple' },
+            { number: homeStats?.yearsExperience || '3+', label: 'Years Experience', icon: Award, color: 'blue' },
+            { number: homeStats?.projectsDone || '50+', label: 'Projects Completed', icon: Target, color: 'purple' },
             { number: '20+', label: 'Technologies', icon: Code, color: 'green' },
-            { number: '100%', label: 'Client Satisfaction', icon: Zap, color: 'yellow' }
+            { number: homeStats?.clientSatisfaction || '100%', label: 'Client Satisfaction', icon: Zap, color: 'yellow' }
           ].map((stat, index) => {
             const Icon = stat.icon
             const colorClasses = {
