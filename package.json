@@ -12,8 +12,10 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:migrate": "prisma migrate deploy",
     "postinstall": "prisma generate",
-    "vercel-build": "prisma generate && next build",
-    "build:prod": "DATABASE_URL='postgresql://placeholder' prisma generate && next build"
+    "vercel-build": "prisma generate && prisma db push && next build",
+    "build:prod": "prisma generate && next build",
+    "deploy:setup": "prisma db push && prisma db seed",
+    "prod:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
