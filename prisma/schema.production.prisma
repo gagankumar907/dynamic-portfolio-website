@@ -1,0 +1,134 @@
+// This is your Prisma schema file for PRODUCTION,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("user")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  name      String
+  title     String
+  bio       String
+  email     String
+  phone     String
+  location  String
+  website   String
+  avatar    String?
+  resume    String?
+  github    String?
+  linkedin  String?
+  twitter   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  image       String?
+  technologies String
+  github      String?
+  demo        String?
+  featured    Boolean  @default(false)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Skill {
+  id        String   @id @default(cuid())
+  name      String
+  category  String
+  level     Int      @default(1)
+  icon      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  title       String
+  company     String
+  location    String
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean  @default(false)
+  description String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Education {
+  id          String   @id @default(cuid())
+  degree      String
+  institution String
+  location    String
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean  @default(false)
+  description String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model HomeStats {
+  id                 String   @id @default(cuid())
+  yearsExperience    String
+  projectsDone       String
+  clientSatisfaction String
+  heroTitle          String
+  heroBio            String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  content     String
+  excerpt     String?
+  image       String?
+  tags        String?
+  published   Boolean  @default(false)
+  featured    Boolean  @default(false)
+  views       Int      @default(0)
+  readTime    Int      @default(5)
+  order       Int      @default(0)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

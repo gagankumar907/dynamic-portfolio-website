@@ -1,5 +1,16 @@
 # Deployment Instructions
 
+## Development vs Production
+
+### Local Development (SQLite)
+- Uses `prisma/schema.prisma` with SQLite provider
+- Database file: `prisma/dev.db`
+- No additional environment variables needed
+
+### Production (PostgreSQL)
+- Uses `prisma/schema.production.prisma` with PostgreSQL provider  
+- Requires DATABASE_URL, DIRECT_URL, SHADOW_DATABASE_URL
+
 ## For Vercel Deployment:
 
 ### 1. Environment Variables Setup
@@ -7,6 +18,8 @@ Add these environment variables in your Vercel dashboard:
 
 ```
 DATABASE_URL=postgresql://username:password@host:port/database?sslmode=require
+DIRECT_URL=postgresql://username:password@host:port/database?sslmode=require
+SHADOW_DATABASE_URL=postgresql://username:password@host:port/shadow_database?sslmode=require
 NEXTAUTH_SECRET=your-super-secret-nextauth-key-for-production-change-this-immediately
 NEXTAUTH_URL=https://your-domain.vercel.app
 ADMIN_PASSWORD=Gaganrai@907
@@ -14,17 +27,48 @@ ADMIN_PASSWORD=Gaganrai@907
 
 ### 2. Database Setup (PostgreSQL)
 - Use services like Supabase, PlanetScale, or Neon
-- Get the connection string and add to DATABASE_URL
+- Create main database and shadow database for migrations
+- Get the connection strings and add to environment variables
 
-### 3. Build Commands
+### 3. Schema Switch for Production
+Before deploying, copy the production schema:
+```bash
+cp prisma/schema.production.prisma prisma/schema.prisma
+```
+
+### 4. Build Commands
 - Build Command: `npm run build`
 - Install Command: `npm install`
 
-### 4. After Deployment
-Run database migration:
+### 5. After Deployment
+Run database migration and seed:
 ```bash
 npx prisma db push
 npx prisma db seed
+```
+
+## For Local Development:
+
+### Setup
+```bash
+npm install
+npx prisma generate
+npx prisma db push
+npm run db:seed
+npm run dev
+```
+
+## Switching Between Environments:
+
+### For Local Development (SQLite):
+```bash
+cp prisma/schema.prisma.bak prisma/schema.prisma  # if backed up
+# OR manually set provider = "sqlite" in schema.prisma
+```
+
+### For Production (PostgreSQL):
+```bash
+cp prisma/schema.production.prisma prisma/schema.prisma
 ```
 
 ## For Netlify Deployment:
