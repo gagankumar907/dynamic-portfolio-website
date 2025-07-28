@@ -117,23 +117,6 @@ model Contact {
   updatedAt DateTime @updatedAt
 }
 
-model BlogPost {
-  id          String   @id @default(cuid())
-  title       String
-  slug        String   @unique
-  excerpt     String
-  content     String
-  image       String?
-  published   Boolean  @default(false)
-  featured    Boolean  @default(false)
-  tags        String?  // JSON array of tags
-  readTime    Int?     // in minutes
-  views       Int      @default(0)
-  order       Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-}
-
 model HomeStats {
   id                String   @id @default(cuid())
   yearsExperience   String   @default("3+")
@@ -143,4 +126,24 @@ model HomeStats {
   heroBio           String   @default("I create beautiful, functional, and user-friendly websites and applications with cutting-edge technologies. Welcome to my digital portfolio where innovation meets creativity.")
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String?
+  content     String
+  image       String?
+  category    String   @default("General")
+  tags        String?  // JSON array of tags
+  published   Boolean  @default(false)
+  featured    Boolean  @default(false)
+  author      String   @default("Gagan Rai")
+  readTime    Int?     // in minutes
+  views       Int      @default(0)
+  order       Int      @default(0)
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
